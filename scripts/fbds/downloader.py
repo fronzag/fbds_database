@@ -122,14 +122,19 @@ class FBDSDownloader:
         return urljoin(self.__root_url, url_part)
 
     def _download_file(self, url: str, download_path: Path) -> Path:
-        result = requests.get(url, stream=True)
+        file_path = Path()
 
-        file_path = download_path / url.removeprefix(f"{self.__root_url}/")
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(file_path, "wb") as f:
-            for chunk in result.iter_content(chunk_size=1024 * 1024):
-                f.write(chunk)
+        try:
+            result = requests.get(url, stream=True)
+            result.raise_for_status()
+        except Exception as e:
+            print(e)
+        else:
+            file_path = download_path / url.removeprefix(f"{self.__root_url}/")
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(file_path, "wb") as f:
+                for chunk in result.iter_content(chunk_size=1024 * 1024):
+                    f.write(chunk)
 
         return file_path
 
