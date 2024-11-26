@@ -6,7 +6,7 @@ Scripts to download and process (state level) FBDS database
 #### Thanks Michel Metran https://github.com/michelmetran
 
 
-Use 01_obter_dados_estado_FBDS.ipynb to download the .tar files and 
+Use 01_obter_dados_estado_FBDS.ipynb to download the .tar files and
 02_processar_dados_estado_FBDS.ipynb to process the data to each state (all municipalities to one specific geopackage).
 
 | id  | _Layer_              | Subpasta    | Tamanho |
