@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=65", "uv>=0.1.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "fbds-database"
 version = "2.0.0"
@@ -6,7 +10,66 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.12.3",
+    "httpx>=0.28.1",
     "ipykernel>=6.29.5",
+    "numpy>=2.2.6",
     "requests>=2.32.3",
+    "retry>=0.9.2",
+    "scrapy>=2.13.3",
     "tqdm>=4.67.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.2.1",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "ruff>=0.12.4",
+    "pre-commit>=4.2.0",
+]
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["scripts/tests"]
+python_files = ["test_*.py"]
+addopts = """
+    --cov=scripts.fbds
+    --cov-report=term-missing
+    --cov-report=term
+    --no-cov-on-fail
+"""
+
+# Ruff
+[tool.ruff]
+line-length = 80
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "BLE001",  # Blind Exception
+    "D100",  # Missing docstring in public module
+    "D101",  # Missing docstring in public class
+    "D102",  # Missing docstring in public method
+    "D103",  # Missing docstring in public function
+    "D104",  # Missing docstring in public package
+    "D105",  # Missing docstring in magic method
+    "D106",  # Missing docstring in public nested class
+    "D107",  # Missing docstring in __init__
+    "D203",  # One blank line required before class docstring
+    "D212",  # Multi-line docstring summary should start at the first line,
+    "E402",  # Module level import not at top of file
+    "ERA001",  # Found commented-out code,
+    "FIX002",
+    "G004",  # Use of f-string in logging messages
+    "T201",  # Use of print
+    "TD002",  # Missing author in TODO
+    "TD003",  # Missing issue link for this TODO
+    "TRY400", # Use `logging.exception` instead of `logging.error`
+    "S602",  # `subprocess` call with `shell=True`
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

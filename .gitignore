@@ -170,3 +170,9 @@ uv.lock
 
 # ruff
 .ruff_cache
+
+# VSCode
+.vscode
+
+# pre-commit
+.pre-commit-config.yaml
